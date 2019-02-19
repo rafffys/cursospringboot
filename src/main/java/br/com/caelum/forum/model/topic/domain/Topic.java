@@ -63,6 +63,38 @@ public class Topic {
 		this.course = course;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public void setCreationInstant(Instant creationInstant) {
+		this.creationInstant = creationInstant;
+	}
+
+	public void setLastUpdate(Instant lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
+	}
+
 	public Long getId() {
 		return id;
 	}
