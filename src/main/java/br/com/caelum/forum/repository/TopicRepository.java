@@ -5,5 +5,4 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.Repository;
 
 public interface TopicRepository extends Repository<Topic, Long>, JpaSpecificationExecutor<Topic> {
-
 }

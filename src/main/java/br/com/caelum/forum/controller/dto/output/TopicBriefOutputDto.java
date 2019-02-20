@@ -1,14 +1,14 @@
 package br.com.caelum.forum.controller.dto.output;
 
+import br.com.caelum.forum.model.topic.domain.Topic;
+import br.com.caelum.forum.model.topic.domain.TopicStatus;
+import org.springframework.data.domain.Page;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import br.com.caelum.forum.model.topic.domain.Topic;
-import br.com.caelum.forum.model.topic.domain.TopicStatus;
-import org.springframework.data.domain.Page;
 
 public class TopicBriefOutputDto {
 	private Long id;
@@ -55,7 +55,6 @@ public class TopicBriefOutputDto {
 	public String getShortDescription() {
 		return shortDescription;
 	}
-
 	public void setShortDescription(String shortDescription) {
 		this.shortDescription = shortDescription;
 	}
@@ -63,7 +62,6 @@ public class TopicBriefOutputDto {
 	public long getSecondsSinceLastUpdate() {
 		return secondsSinceLastUpdate;
 	}
-
 	public void setSecondsSinceLastUpdate(long secondsSinceLastUpdate) {
 		this.secondsSinceLastUpdate = secondsSinceLastUpdate;
 	}
@@ -71,7 +69,6 @@ public class TopicBriefOutputDto {
 	public String getOwnerName() {
 		return ownerName;
 	}
-
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
 	}
@@ -79,7 +76,6 @@ public class TopicBriefOutputDto {
 	public String getCourseName() {
 		return courseName;
 	}
-
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
@@ -87,7 +83,6 @@ public class TopicBriefOutputDto {
 	public String getSubcategoryName() {
 		return subcategoryName;
 	}
-
 	public void setSubcategoryName(String subcategoryName) {
 		this.subcategoryName = subcategoryName;
 	}
@@ -95,7 +90,6 @@ public class TopicBriefOutputDto {
 	public String getCategoryName() {
 		return categoryName;
 	}
-
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
@@ -103,7 +97,6 @@ public class TopicBriefOutputDto {
 	public int getNumberOfResponses() {
 		return numberOfResponses;
 	}
-
 	public void setNumberOfResponses(int numberOfResponses) {
 		this.numberOfResponses = numberOfResponses;
 	}
@@ -111,10 +104,7 @@ public class TopicBriefOutputDto {
 	public boolean isSolved() {
 		return solved;
 	}
-
 	public void setSolved(boolean solved) {
 		this.solved = solved;
 	}
-	
-	
 }
