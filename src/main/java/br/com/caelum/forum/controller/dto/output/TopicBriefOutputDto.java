@@ -3,9 +3,12 @@ package br.com.caelum.forum.controller.dto.output;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.caelum.forum.model.topic.domain.Topic;
 import br.com.caelum.forum.model.topic.domain.TopicStatus;
+import org.springframework.data.domain.Page;
 
 public class TopicBriefOutputDto {
 	private Long id;
@@ -32,6 +35,14 @@ public class TopicBriefOutputDto {
 	
 	private long getSecondsSince(Instant lastUpdate) {
 		return Duration.between(lastUpdate, Instant.now()).get(ChronoUnit.SECONDS);
+	}
+
+	public static List<TopicBriefOutputDto> listFromTopics(List<Topic> listaTopicos) {
+		return listaTopicos.stream().map(TopicBriefOutputDto::new).collect(Collectors.toList());
+	}
+
+	public static Page<TopicBriefOutputDto> listFromTopics(Page<Topic> pageTopicos) {
+		return pageTopicos.map(TopicBriefOutputDto::new);
 	}
 
 	public Long getId() {
