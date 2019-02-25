@@ -31,5 +31,5 @@ public interface TopicRepository extends Repository<Topic, Long>, JpaSpecificati
             "WHERE c.id=:idCategory AND t.status = br.com.caelum.forum.model.topic.domain.TopicStatus.NOT_ANSWERED")
     int getTotalUnansweredTopicsByIdCategory(@Param("idCategory") Long idCategory);
 
-
+    void save(Topic topic);
 }
