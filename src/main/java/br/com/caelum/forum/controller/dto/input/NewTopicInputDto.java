@@ -6,9 +6,18 @@ import br.com.caelum.forum.model.User;
 import br.com.caelum.forum.model.topic.domain.Topic;
 import br.com.caelum.forum.repository.CourseRepository;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class NewTopicInputDto {
+    @NotBlank
+    @Size(min = 10)
     private String shortDescription;
+    @NotBlank
+    @Size(min=10)
     private String content;
+    @NotEmpty
     private String courseName;
 
     public NewTopicInputDto(String shortDescription, String content, String courseName) {

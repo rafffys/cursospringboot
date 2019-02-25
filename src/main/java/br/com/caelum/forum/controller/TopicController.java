@@ -21,6 +21,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -67,7 +68,7 @@ public class TopicController {
 	}
 
 	@PostMapping
-	public ResponseEntity<TopicOutputDto> createTopic(@RequestBody NewTopicInputDto newTopicInputDto, @AuthenticationPrincipal User loggedUser, UriComponentsBuilder uriComponentsBuilder) throws ResourceNotFoundException {
+	public ResponseEntity<TopicOutputDto> createTopic(@Valid @RequestBody NewTopicInputDto newTopicInputDto, @AuthenticationPrincipal User loggedUser, UriComponentsBuilder uriComponentsBuilder) throws ResourceNotFoundException {
 		Topic topic = newTopicInputDto.build(loggedUser, courseRepository);
 		this.topicRepository.save(topic);
 		return ResponseEntity
