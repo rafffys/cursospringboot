@@ -22,4 +22,10 @@ public class UsersService implements UserDetailsService {
                 .findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado!"));
     }
+
+    public UserDetails loadUserById(Long userId) {
+        return this.userRepository
+                .findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado!"));
+    }
 }
