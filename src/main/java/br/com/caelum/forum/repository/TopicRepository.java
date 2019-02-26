@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 public interface TopicRepository extends Repository<Topic, Long>, JpaSpecificationExecutor<Topic> {
     @Query("select COUNT(t) from Topic t " +
@@ -34,6 +35,8 @@ public interface TopicRepository extends Repository<Topic, Long>, JpaSpecificati
     int getTotalUnansweredTopicsByIdCategory(@Param("idCategory") Long idCategory);
 
     List<Topic> findByOwnerAndCreationInstantAfterOrderByCreationInstantAsc(User loggedUser, Instant oneHourAgo);
+
+    Optional<Topic> findById(Long id);
 
     void save(Topic topic);
 }

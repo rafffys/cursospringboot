@@ -3,6 +3,7 @@ package br.com.caelum.forum.controller;
 import br.com.caelum.forum.controller.dto.input.NewTopicInputDto;
 import br.com.caelum.forum.controller.dto.input.TopicSearchInputDto;
 import br.com.caelum.forum.controller.dto.output.TopicBriefOutputDto;
+import br.com.caelum.forum.controller.dto.output.TopicCompleteOutputDto;
 import br.com.caelum.forum.controller.dto.output.TopicDashboardDto;
 import br.com.caelum.forum.controller.dto.output.TopicOutputDto;
 import br.com.caelum.forum.exception.ResourceNotFoundException.ResourceNotFoundException;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -58,6 +58,12 @@ public class TopicController {
 									Pageable pageable) {
 		Page<Topic> listaTopicos = topicRepository.findAll(topicSearchInputDto.buildSpecification(), pageable);
 		return TopicBriefOutputDto.listFromTopics(listaTopicos);
+	}
+
+	@GetMapping("/{id}")
+	public TopicCompleteOutputDto findById(@PathVariable("id") Long topicId) throws ResourceNotFoundException {
+		Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Tópico com id " + topicId + " não encontrado!") );
+		return new TopicCompleteOutputDto(topic);
 	}
 
 	@GetMapping("/dashboard")
