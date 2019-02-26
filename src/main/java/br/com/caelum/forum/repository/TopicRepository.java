@@ -1,5 +1,6 @@
 package br.com.caelum.forum.repository;
 
+import br.com.caelum.forum.model.User;
 import br.com.caelum.forum.model.topic.domain.Topic;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -7,6 +8,7 @@ import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
+import java.util.List;
 
 public interface TopicRepository extends Repository<Topic, Long>, JpaSpecificationExecutor<Topic> {
     @Query("select COUNT(t) from Topic t " +
@@ -30,6 +32,8 @@ public interface TopicRepository extends Repository<Topic, Long>, JpaSpecificati
             "JOIN sc.category c " +
             "WHERE c.id=:idCategory AND t.status = br.com.caelum.forum.model.topic.domain.TopicStatus.NOT_ANSWERED")
     int getTotalUnansweredTopicsByIdCategory(@Param("idCategory") Long idCategory);
+
+    List<Topic> findByOwnerAndCreationInstantAfterOrderByCreationInstantAsc(User loggedUser, Instant oneHourAgo);
 
     void save(Topic topic);
 }

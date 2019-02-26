@@ -12,12 +12,14 @@ import br.com.caelum.forum.model.topic.domain.Topic;
 import br.com.caelum.forum.repository.CategoryRepository;
 import br.com.caelum.forum.repository.CourseRepository;
 import br.com.caelum.forum.repository.TopicRepository;
+import br.com.caelum.forum.validator.NewTopicCustomValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -42,6 +44,11 @@ public class TopicController {
 		this.topicRepository = topicRepository;
 		this.categoryRepository = categoryRepository;
 		this.courseRepository = courseRepository;
+	}
+
+	@InitBinder("newTopicInputDto")
+	public void initBinder(WebDataBinder binder, @AuthenticationPrincipal User loggedUser) {
+		binder.addValidators(new NewTopicCustomValidator(topicRepository, loggedUser));
 	}
 
 	@GetMapping
