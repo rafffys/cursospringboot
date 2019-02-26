@@ -97,7 +97,7 @@ public class TopicController {
 		Answer answer = newAnswerInputDto.build(topicId, topicRepository, loggedUser);
 		this.answerRepository.save(answer);
 		return ResponseEntity
-				.created(uriComponentsBuilder.path("/api/topics/{id}/answers").buildAndExpand(answer.getTopic().getId()).toUri())
+				.created(uriComponentsBuilder.path("/api/topics/{id}").buildAndExpand(answer.getTopic().getId()).toUri())
 				.body(new AnswerBriefOutputDto(answer));
 	}
 }
