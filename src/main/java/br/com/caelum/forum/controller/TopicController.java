@@ -1,15 +1,15 @@
 package br.com.caelum.forum.controller;
 
+import br.com.caelum.forum.controller.dto.input.NewAnswerInputDto;
 import br.com.caelum.forum.controller.dto.input.NewTopicInputDto;
 import br.com.caelum.forum.controller.dto.input.TopicSearchInputDto;
-import br.com.caelum.forum.controller.dto.output.TopicBriefOutputDto;
-import br.com.caelum.forum.controller.dto.output.TopicCompleteOutputDto;
-import br.com.caelum.forum.controller.dto.output.TopicDashboardDto;
-import br.com.caelum.forum.controller.dto.output.TopicOutputDto;
+import br.com.caelum.forum.controller.dto.output.*;
 import br.com.caelum.forum.exception.ResourceNotFoundException.ResourceNotFoundException;
+import br.com.caelum.forum.model.Answer;
 import br.com.caelum.forum.model.Category;
 import br.com.caelum.forum.model.User;
 import br.com.caelum.forum.model.topic.domain.Topic;
+import br.com.caelum.forum.repository.AnswerRepository;
 import br.com.caelum.forum.repository.CategoryRepository;
 import br.com.caelum.forum.repository.CourseRepository;
 import br.com.caelum.forum.repository.TopicRepository;
@@ -37,13 +37,16 @@ public class TopicController {
 	private TopicRepository topicRepository;
 	private CategoryRepository categoryRepository;
 	private CourseRepository courseRepository;
+	private AnswerRepository answerRepository;
 
 	public TopicController(TopicRepository topicRepository,
 						   CategoryRepository categoryRepository,
-						   CourseRepository courseRepository) {
+						   CourseRepository courseRepository,
+						   AnswerRepository answerRepository) {
 		this.topicRepository = topicRepository;
 		this.categoryRepository = categoryRepository;
 		this.courseRepository = courseRepository;
+		this.answerRepository = answerRepository;
 	}
 
 	@InitBinder("newTopicInputDto")
@@ -87,5 +90,14 @@ public class TopicController {
 		return ResponseEntity
 				.created(uriComponentsBuilder.path("/api/topics/{id}").buildAndExpand(topic.getId()).toUri())
 				.body(new TopicOutputDto(topic));
+	}
+
+	@PostMapping("/{id}/answers")
+	public ResponseEntity<AnswerBriefOutputDto> createAnswer(@PathVariable("id") Long topicId, @Valid @RequestBody NewAnswerInputDto newAnswerInputDto, @AuthenticationPrincipal User loggedUser, UriComponentsBuilder uriComponentsBuilder) throws ResourceNotFoundException {
+		Answer answer = newAnswerInputDto.build(topicId, topicRepository, loggedUser);
+		this.answerRepository.save(answer);
+		return ResponseEntity
+				.created(uriComponentsBuilder.path("/api/topics/{id}/answers").buildAndExpand(answer.getTopic().getId()).toUri())
+				.body(new AnswerBriefOutputDto(answer));
 	}
 }

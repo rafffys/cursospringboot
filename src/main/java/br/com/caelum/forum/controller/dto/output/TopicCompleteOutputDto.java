@@ -1,6 +1,5 @@
 package br.com.caelum.forum.controller.dto.output;
 
-import br.com.caelum.forum.controller.dto.output.AnswerBriefOutputDto.AnswerBriefOutputDto;
 import br.com.caelum.forum.model.topic.domain.Topic;
 import br.com.caelum.forum.model.topic.domain.TopicStatus;
 import org.springframework.data.domain.Page;

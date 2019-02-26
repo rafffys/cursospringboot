@@ -1,4 +1,4 @@
-package br.com.caelum.forum.controller.dto.output.AnswerBriefOutputDto;
+package br.com.caelum.forum.controller.dto.output;
 
 import br.com.caelum.forum.model.Answer;
 
