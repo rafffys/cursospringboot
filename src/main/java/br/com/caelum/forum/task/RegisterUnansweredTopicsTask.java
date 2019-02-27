@@ -20,7 +20,7 @@ public class RegisterUnansweredTopicsTask {
         this.openTopicsByCategoryRepository = openTopicsByCategoryRepository;
     }
 
-    @Scheduled(cron="*/10 * * * * *")
+    @Scheduled(cron="0 0 20 * * *")
     public void execute() {
         List<OpenTopicsByCategory> topics = topicRepository.findOpenTopicsByCategory();
         this.openTopicsByCategoryRepository.saveAll(topics);
