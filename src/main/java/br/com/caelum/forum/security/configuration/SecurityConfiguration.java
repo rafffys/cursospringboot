@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -29,6 +30,7 @@ import java.io.IOException;
 
 @EnableWebSecurity
 @Configuration
+@Order(2)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -50,6 +52,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/**.html",
+                "/css/**",
+                "/**.ico",
+                "/js/**",
                 "/v2/api-docs",
                 "/webjars/**",
                 "configuration/**",
@@ -58,20 +63,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/topics/**").permitAll()
-                .antMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated()
-            .and()
-                .cors()
-            .and()
-                .csrf().disable()
-            .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-                .addFilterBefore(new JwtAuthenticationFilter(tokenManager, usersService), UsernamePasswordAuthenticationFilter.class)
-            .exceptionHandling()
-                .authenticationEntryPoint(new JwtAuthenticationEntryPoint());
+        http.antMatcher("/api/**")
+            .authorizeRequests()
+                    .antMatchers(HttpMethod.GET, "/api/topics/**").permitAll()
+                    .antMatchers("/api/auth/**").permitAll()
+                    .anyRequest().authenticated()
+                .and()
+                    .cors()
+                .and()
+                    .csrf().disable()
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                    .addFilterBefore(new JwtAuthenticationFilter(tokenManager, usersService), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                    .authenticationEntryPoint(new JwtAuthenticationEntryPoint());
     }
 
     private static class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
