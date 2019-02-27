@@ -1,5 +1,6 @@
 package br.com.caelum.forum.repository;
 
+import br.com.caelum.forum.model.OpenTopicsByCategory;
 import br.com.caelum.forum.model.User;
 import br.com.caelum.forum.model.topic.domain.Topic;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -39,4 +40,12 @@ public interface TopicRepository extends Repository<Topic, Long>, JpaSpecificati
     Optional<Topic> findById(Long id);
 
     void save(Topic topic);
+
+    @Query("select new br.com.caelum.forum.model.OpenTopicsByCategory(" +
+            "t.course.subcategory.category.name as categoryName, " +
+            "count(t) as topicCount, " +
+            "now() as instant) from Topic t " +
+            "where t.status = 'NOT_ANSWERED' " +
+            "group by t.course.subcategory.category")
+    List<OpenTopicsByCategory> findOpenTopicsByCategory();
 }
