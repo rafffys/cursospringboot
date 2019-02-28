@@ -39,7 +39,7 @@ public interface TopicRepository extends Repository<Topic, Long>, JpaSpecificati
 
     Optional<Topic> findById(Long id);
 
-    void save(Topic topic);
+    Topic save(Topic topic);
 
     @Query("select new br.com.caelum.forum.model.OpenTopicsByCategory(" +
             "t.course.subcategory.category.name as categoryName, " +
